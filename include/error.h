@@ -26,8 +26,10 @@ enum code_error {                               ///< Error codes.
     TREE_INIT         = 1 << 4,
     TREE_ERR_SIZE     = 1 << 5,
     TREE_ERR_ROOT_PTR = 1 << 6,
+    
+    NODE_ERR          = 1 << 7,
 
-    ERR_CNT           = 7
+    ERR_CNT           = 8
 };
 
 void my_strerr (unsigned code_error, FILE *stream);    ///< Error print function.

@@ -7,9 +7,9 @@ CFLAGS = -c -I -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wflo
 	-Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing   \
 	-Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -Werror=vla -D_DEBUG -D_EJUDGE_CLIENT_SIDE
 	
-INCLUDES = tree.h error.h
+INCLUDES = tree.h error.h utils.h
 
-SOURCES = main.cpp error.cpp tree.cpp
+SOURCES = main.cpp error.cpp tree.cpp utils.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 

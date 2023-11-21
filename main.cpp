@@ -8,13 +8,19 @@ int main ()
 
     add_node (&tree, tree.root, 5, LEFT);
     add_node (&tree, tree.root->left, 6, RIGHT);
+    add_node (&tree, tree.root, 7, RIGHT);
+    add_node (&tree, tree.root->right, 8, RIGHT);
+    add_node (&tree, tree.root->left, 3, LEFT);
+
+    add_node (&tree, tree.root->right, 11, LEFT);
 
     FILE *fp = fopen ("tree.txt", "w");
 
     print_tree (&tree, tree.root, fp);
 
-    tree_dump_text (&tree, 1, __FILE__, __func__, __LINE__);
-    tree_dump_graph_viz (&tree, 0, __FILE__, __func__, __LINE__);
+    CALL_DUMP (&tree, 0);
+
+    destroy_tree (&tree);
 
     return 0;
 }

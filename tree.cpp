@@ -1,25 +1,37 @@
 #include "tree.h"
 
-#define WHITE_COLOR "\"#ffffff\""
 #define BLUE_COLOR "\"#00BFFF\""
-#define YELLOW_COLOR "\"#FFFF00\""
 #define PURPLE_COLOR "\"#8B00FF\""
 #define RED_COLOR "\"#ff0000\""
 #define LIGHT_GREEN_COLOR "\"#ccff99\""
 #define BACK_GROUND_COLOR "\"#696969\""
-#define WEIGHT "\"10000\""
 
 #define FONTNAME "\"Times-New-Roman\""
 
-const char *fp_dump_text_name = "file_err.txt";
-const char *fp_dot_name = "dump.dot";
-
 int create_tree (TREE *tree, const int value)
 {
+    my_assert (tree != NULL);
+
     tree->root = create_node (value, NULL, NULL, NULL);
     tree->size = 1;
 
     tree->init_status = true;
+
+    tree->info.fp_name_base = "tree.txt";
+
+#ifdef DEBUG
+    tree->info.fp_dump_text_name = "file_err.txt";
+    tree->info.fp_dot_name       = "dump.dot";
+    tree->info.fp_name_html      = "dot.html";
+    tree->info.fp_image          = "dot.svg";
+
+    tree->info.fp_html_dot = fopen (tree->info.fp_name_html, "w+");
+
+    if (tree->info.fp_html_dot == NULL)
+    {
+        my_strerr (ERR_FOPEN, stderr);
+    }
+#endif
 
     assert_tree (tree);
 
@@ -29,6 +41,7 @@ int create_tree (TREE *tree, const int value)
 NODE *create_node (const int value, NODE *left, NODE *right, NODE *parent)
 {
     NODE *node = (NODE *) calloc (1, sizeof (NODE));
+    my_assert (node != NULL);
 
     node->value  = value;
     node->left   = left;
@@ -40,6 +53,7 @@ NODE *create_node (const int value, NODE *left, NODE *right, NODE *parent)
 
 int add_node (TREE *tree, NODE *node, const int value, const bool side)
 {
+    my_assert (node != NULL);
     assert_tree (tree);
 
     NODE *new_node = create_node (value, NULL, NULL, node);
@@ -64,24 +78,26 @@ int delete_node (TREE *tree, NODE *node)
 {
     assert_tree (tree);
 
-    if (node->parent->left == node)
+    if (!node)
     {
-        node->parent->left = NULL;
-    }
-    else if (node->parent->right == node)
-    {
-        node->parent->right = NULL;
+        return ERR_NO;
     }
 
-    if (node->left != NULL)
+    if (node->parent != NULL)
     {
-        CHECK_ERROR_RETURN (delete_node (tree, node->left));
+        if (node->parent->left == node)
+        {
+            node->parent->left = NULL;
+        }
+        else if (node->parent->right == node)
+        {
+            node->parent->right = NULL;
+        }
     }
+
+    CHECK_ERROR_RETURN (delete_node (tree, node->left));
     
-    if (node->right != NULL)
-    {
-        CHECK_ERROR_RETURN (delete_node (tree, node->right));
-    }
+    CHECK_ERROR_RETURN (delete_node (tree, node->right));
 
     free (node);
     node = NULL;
@@ -94,6 +110,7 @@ int delete_node (TREE *tree, NODE *node)
 
 int print_tree (TREE *tree, NODE *node, FILE *stream)
 {
+    my_assert (stream != NULL);
     assert_tree (tree);
 
     if (!node)
@@ -116,32 +133,78 @@ int print_tree (TREE *tree, NODE *node, FILE *stream)
     return ERR_NO;
 }
 
+int destroy_tree (TREE *tree)
+{
+    CHECK_ERROR_RETURN (delete_node (tree, tree->root));
+    tree->root = NULL;
+
+    tree->init_status = false;
+    tree->size = VALUE_VENOM;
+
+    tree->info.fp_name_base = NULL;
+
+    free (tree->info.buf);
+    tree->info.buf = NULL;
+
+#ifdef DEBUG
+    tree->info.fp_dump_text_name = NULL;
+    tree->info.fp_name_html = NULL;
+    tree->info.fp_dot_name = NULL;
+
+    if (fclose (tree->info.fp_html_dot) != 0)
+    {
+        my_strerr (ERR_FCLOSE, stderr);
+    }
+#endif
+
+    return ERR_NO;
+}
+
 #ifdef DEBUG
 
 static void print_tree_dump (NODE *node, FILE *stream);
 
-static void node_connect (NODE *node, FILE *stream, int ip);
-static void create_node (NODE *node, FILE *stream, int ip);
-static void create_connect_nodes (NODE *node, FILE *stream, int ip);
+static int create_node (NODE *node, FILE *stream, int ip_parent, int ip, char *color);
 
-#define VERIF_TREE_ELEM(expr, name_error) if (!(expr)) {code_error |= name_error;}
+#define VERIF_EXPR(expr, name_error) if (!(expr)) {code_error |= name_error;}
 
 int tree_verificator (TREE *tree)
 {
     int code_error = 0;
 
-    VERIF_TREE_ELEM (tree != NULL, TREE_ERR_PTR)
+    VERIF_EXPR (tree != NULL, TREE_ERR_PTR)
 
-    VERIF_TREE_ELEM (tree->init_status == true, TREE_INIT)
+    VERIF_EXPR (tree->init_status == true, TREE_INIT)
 
-    VERIF_TREE_ELEM (tree->size > 0, TREE_ERR_SIZE)
+    VERIF_EXPR (tree->size >= 0, TREE_ERR_SIZE)
 
-    VERIF_TREE_ELEM (tree->root != NULL, TREE_ERR_ROOT_PTR)
+    VERIF_EXPR (tree->root != NULL, TREE_ERR_ROOT_PTR)
 
     return code_error;
 }
 
-#undef VERIF_TREE_ELEM
+int node_verificator (NODE *node)
+{
+    int code_error = 0;
+
+    if (!node)
+    {
+        return ERR_NO;
+    }
+
+    if (node->parent != NULL)
+    {
+        VERIF_EXPR (node->parent->left == node || node->parent->right == node, NODE_ERR)
+    }
+
+    code_error |= node_verificator (node->left);
+
+    code_error |= node_verificator (node->right);
+
+    return code_error;
+}
+
+#undef VERIF_EXPR
 
 #define DUMP_LOG(str) fprintf (fp_err, str "\n");
 #define DUMP_LOG_PARAM(str, ...) fprintf (fp_err, str "\n", __VA_ARGS__);
@@ -150,7 +213,7 @@ void tree_dump_text (TREE *tree, const int code_error,
                      const char *file_err, const char *func_err, 
                      const int line_err)
 {
-    FILE *fp_err = fopen (fp_dump_text_name, "a");
+    FILE *fp_err = fopen (tree->info.fp_dump_text_name, "a");
 
     if (fp_err == NULL)
     {
@@ -174,7 +237,7 @@ void tree_dump_text (TREE *tree, const int code_error,
             DUMP_LOG_PARAM ("\tinit_status = %d", tree->init_status);
             DUMP_LOG ("\t{");
 
-            if ((code_error & TREE_ERR_ROOT_PTR) == 0)
+            if (tree->root != NULL)
             {
                 print_tree_dump (tree->root, fp_err);
             }
@@ -196,6 +259,9 @@ void tree_dump_text (TREE *tree, const int code_error,
     }
 }
 
+#undef DUMP_LOG
+#undef DUMP_LOG_PARAM
+
 void print_tree_dump (NODE *node, FILE *stream)
 {
     fprintf (stream, "\t\t*node[%p] = %d;\n", node, node->value);
@@ -210,11 +276,14 @@ void print_tree_dump (NODE *node, FILE *stream)
     }
 }
 
+#define DUMP_DOT(str) fprintf (fp_dot, str "\n");
+#define DUMP_DOT_PARAM(str, ...) fprintf (fp_dot, str "\n", __VA_ARGS__);
+
 void tree_dump_graph_viz (TREE *tree, const int code_error, 
                          const char *file_err, const char *func_err, 
                          const int line_err)
 {
-    FILE *fp_dot = fopen (fp_dot_name, "w+");
+    FILE *fp_dot = fopen (tree->info.fp_dot_name, "w+");
 
     if (fp_dot == NULL)
     {
@@ -224,26 +293,17 @@ void tree_dump_graph_viz (TREE *tree, const int code_error,
     {
         if (tree != NULL)
         {
-            fprintf (fp_dot, "digraph List {\n");
-            fprintf (fp_dot, "\trankdir = LR;\n");
-            fprintf (fp_dot, "\tnode [shape = record];\n");
-            fprintf (fp_dot, "\tbgcolor = " BACK_GROUND_COLOR ";\n");
+            DUMP_DOT ("digraph List {");
+            DUMP_DOT ("\trankdir = HR;");
+            DUMP_DOT ("\tbgcolor = " BACK_GROUND_COLOR ";");
 
-            if (code_error != TREE_ERR_SIZE)
+            if (tree->root != NULL)
             {
-                fprintf (fp_dot, "\t0");
-
-                node_connect (tree->root, fp_dot, 0);
-
-                fprintf (fp_dot, "[arrowsize = 0.0, weight = " WEIGHT ", color = " BACK_GROUND_COLOR ", fontname = " FONTNAME "];\n");
-
-                create_node (tree->root, fp_dot, 0);
-
-                create_connect_nodes (tree->root, fp_dot, 0);
+                create_node (tree->root, fp_dot, -1, 0, RED_COLOR);
             }
 
-            fprintf (fp_dot, "\tlabel = \"tree_dump from function %s, Tree/%s:%d\";\n", func_err, file_err, line_err);
-            fprintf (fp_dot, "\tAll[shape = Mrecord, style = filled, fillcolor = " PURPLE_COLOR ", label = \"size = %d\"];}\n", tree->size);
+            DUMP_DOT_PARAM ("\tlabel = \"tree_dump from function %s, Tree/%s:%d\";\n", func_err, file_err, line_err);
+            DUMP_DOT_PARAM ("\tAll[shape = Mrecord, style = filled, fillcolor = " PURPLE_COLOR ", label = \"size = %d\"];}\n", tree->size);
         }
     }
 
@@ -255,51 +315,56 @@ void tree_dump_graph_viz (TREE *tree, const int code_error,
     char *command = "dot -Tsvg dump.dot -o dot.svg";
 
     system (command);
+
+    tree_dump_html (tree);
 }
 
-void node_connect (NODE *node, FILE *stream, int ip)
+#undef DUMP_DOT
+#undef DUMP_DOT_PARAM
+
+int create_node (NODE *node, FILE *stream, int ip_parent, int ip, char *color)
 {
-    fprintf (stream, " -> %d", ip);
-
-    if (node->left != NULL)
+    if (!node)
     {
-        node_connect (node->left, stream, ip + 1);
+        return ip - 1;
     }
 
-    if (node->right != NULL)
+    fprintf (stream, "\tnode%d [shape = Mrecord, style = filled, fillcolor = %s, label = \"{idx: %p | value: %d | left: %p | right: %p | parent: %p}\"];\n",
+             ip, color, node, node->value, node->left, node->right, node->parent);
+
+    if (ip > 0)
     {
-        node_connect (node->right, stream, ip + 1);
+        fprintf (stream, "\tnode%d -> node%d [color = %s]\n", ip_parent, ip, color);
     }
+
+    ip_parent = ip;
+
+    ip = create_node (node->left, stream, ip_parent, ip + 1, BLUE_COLOR);
+    ip = create_node (node->right, stream, ip_parent, ip + 1, LIGHT_GREEN_COLOR);
+
+    return ip;
 }
 
-void create_node (NODE *node, FILE *stream, int ip)
+void tree_dump_html (TREE *tree)
 {
-    fprintf (stream, "\t%d [shape = Mrecord, style = filled, fillcolor = " LIGHT_GREEN_COLOR ", label = \"idx: %p | value: %d | left: %p | right: %p | parent: %p\"];\n", 
-             ip, node, node->value, node->left, node->right, node->parent);
-    
-    if (node->left != NULL)
+    FILE *fp_dot = fopen (tree->info.fp_image, "r");
+
+    if (fp_dot == NULL)
     {
-        create_node (node->left, stream, ip + 1);
+        my_strerr (ERR_FOPEN, stderr);
     }
 
-    if (node->right != NULL)
-    {
-        create_node (node->right, stream, ip + 1);
-    }
-}
+    size_t size_dot = get_file_size (fp_dot);
 
-void create_connect_nodes (NODE *node, FILE *stream, int ip)
-{
-    if (node->left != NULL)
-    {
-        fprintf (stream, "\t%d -> %d\n", ip, ip + 1);
-        create_connect_nodes (node->left, stream, ip + 1);
-    }
+    char *data_dot = (char *) calloc (size_dot, sizeof (char));
 
-    if (node->right != NULL)
+    fread (data_dot, sizeof (char), size_dot, fp_dot);
+
+    fprintf (tree->info.fp_html_dot, "%s\n", data_dot);
+
+    if (fclose (fp_dot) != 0)
     {
-        fprintf (stream, "\t%d -> %d\n", ip, ip + 1);
-        create_connect_nodes (node->right, stream, ip + 1);
+        my_strerr (ERR_FCLOSE, stderr);
     }
 }
 

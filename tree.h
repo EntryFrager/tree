@@ -6,6 +6,7 @@
 #include "TXLib.h"
 
 #include "include\error.h"
+#include "include\utils.h"
 
 #define DEBUG
 
@@ -13,18 +14,18 @@
     #define CALL_DUMP(tree, code_error)                                         \
     {                                                                           \
         tree_dump_text (tree, code_error, __FILE__, __func__, __LINE__);        \
-        tree_dump_graph_viz (tree, code_error, __FILE__, __func__, __LINE__);    \
+        tree_dump_graph_viz (tree, code_error, __FILE__, __func__, __LINE__);   \
     }
 
     static int CODE_ERROR = 0;
 
-    #define assert_tree(tree)                                   \
-    {                                                           \
-        if ((CODE_ERROR = tree_verificator (tree)) != ERR_NO)   \
-        {                                                       \
-            CALL_DUMP(tree, CODE_ERROR)                         \
-            return CODE_ERROR;                                  \
-        }                                                       \
+    #define assert_tree(tree)                                                                   \
+    {                                                                                           \
+        if ((CODE_ERROR = (tree_verificator (tree) | node_verificator (tree->root))) != ERR_NO) \
+        {                                                                                       \
+            CALL_DUMP(tree, CODE_ERROR)                                                         \
+            return CODE_ERROR;                                                                  \
+        }                                                                                       \
     }
 
     #define CHECK_ERROR_PRINT(code_error)  if (code_error != ERR_NO) fprintf (stderr, "\x1b[31m%s\x1b[0m", my_strerr (code_error));
@@ -49,10 +50,28 @@ typedef struct NODE{
 } NODE;
 
 typedef struct {
+    char *fp_name_base = NULL;
+    FILE *fp_base      = NULL;
+
+    char *buf = NULL;
+
+#ifdef DEBUG
+    char *fp_dump_text_name = NULL;
+    char *fp_dot_name       = NULL;
+    char *fp_name_html      = NULL;
+    char *fp_image          = NULL;
+
+    FILE *fp_html_dot = NULL;
+#endif
+} INFO;
+
+typedef struct {
     NODE *root = NULL;
 
     int size = VALUE_VENOM;
     bool init_status = false;
+
+    INFO info = {};
 } TREE;
 
 int create_tree (TREE *tree, const int value);
@@ -67,26 +86,10 @@ int print_tree (TREE *tree, NODE *node, FILE *stream);
 
 int destroy_tree (TREE *tree);
 
-/*
-
-    (5 (3 nil nil) (10 nil nil))
-
-    5
-    3 10
-
-            Ты животное
-
-    Ты кот?             Ты человек?
-
-    ("Ты животное" ("ты кот" nil nil) ("ты человек" nil nil))
-
-    // general tree write - parametire with writeNode();
-    // different data types
-    writeTree();
-*/
-
 #ifdef DEBUG
     int tree_verificator (TREE *tree);
+
+    int node_verificator (NODE *node);
 
     void tree_dump_text (TREE *tree, const int code_error, 
                          const char *file_err, const char *func_err, 
@@ -95,6 +98,8 @@ int destroy_tree (TREE *tree);
     void tree_dump_graph_viz (TREE *tree, const int code_error, 
                              const char *file_err, const char *func_err, 
                              const int line_err);
+
+    void tree_dump_html (TREE *tree);
 #endif
 
 #endif //TREE_H

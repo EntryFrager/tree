@@ -13,7 +13,8 @@ static const char *err_msgs_arr[] = {
     "pointer to tree structure null",
     "the tree was not initialized",
     "wrong tree size",
-    "invalid pointer to tree root"
+    "invalid pointer to tree root",
+    "communication between nodes is broken"
 };
 
 /**

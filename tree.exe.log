@@ -1,0 +1,1060 @@
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x76B5AB8D в функции ungetwc(). Попытка записать данные по адресу 0x00501C5A в модуле C:\Windows\System32\msvcrt.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x3C58 (Main), GetLastError(): 131 (Попытка поместить указатель на файл перед началом файла), _doserrno: 131 (Unknown error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x76B5AB8D in C:\Windows\System32\msvcrt.dll: ungetwc()
+# 1 0x76B5B04D in C:\Windows\System32\msvcrt.dll: ungetwc()
+# 2 0x76B5525D in C:\Windows\System32\msvcrt.dll: sprintf()
+
+# 3 0x00458948 in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (336):
+
+    334:     char *command = "";
+    335: 
+=>  336:     sprintf (command, "dot -Tsvg %s -o %s", FP_DOT_NAME, FP_IMAGE);
+    337: 
+    338:     system (command);
+
+# 4 0x00457ED6 in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (71):
+
+     69:     tree->size++;
+     70: 
+=>   71:     assert_tree (tree);
+     72: 
+     73:     return ERR_NO;
+
+# 5 0x0042BDC4 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (9):
+
+      7:     create_tree (&tree, 10);
+      8: 
+=>    9:     add_node (&tree, tree.root, 5, LEFT);
+     10:     add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 18:12:22, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 18:12:29
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x76B5AB8D в функции ungetwc(). Попытка записать данные по адресу 0x00501C5A в модуле C:\Windows\System32\msvcrt.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x3C58 (Main), GetLastError(): 131 (Попытка поместить указатель на файл перед началом файла), _doserrno: 131 (Unknown error). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x76B5AB8D in C:\Windows\System32\msvcrt.dll: ungetwc()
+# 1 0x76B5B04D in C:\Windows\System32\msvcrt.dll: ungetwc()
+# 2 0x76B5525D in C:\Windows\System32\msvcrt.dll: sprintf()
+
+# 3 0x00458948 in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (336):
+
+    334:     char *command = "";
+    335: 
+=>  336:     sprintf (command, "dot -Tsvg %s -o %s", FP_DOT_NAME, FP_IMAGE);
+    337: 
+    338:     system (command);
+
+# 4 0x00457ED6 in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (71):
+
+     69:     tree->size++;
+     70: 
+=>   71:     assert_tree (tree);
+     72: 
+     73:     return ERR_NO;
+
+# 5 0x0042BDC4 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (9):
+
+      7:     create_tree (&tree, 10);
+      8: 
+=>    9:     add_node (&tree, tree.root, 5, LEFT);
+     10:     add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 18:12:22, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 18:12:29
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x17B0 (Main), errno: 22 (Invalid argument). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D18C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00457D6C in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (55):
+
+     53: int add_node (TREE *tree, NODE *node, const int value, const bool side)
+     54: {
+=>   55:     my_assert (node != NULL);
+     56:     assert_tree (tree);
+     57: 
+
+# 4 0x0042BE35 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (12):
+
+     10:     add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+=>   12:     add_node (&tree, tree.root->right, 8, RIGHT);
+     13:     add_node (&tree, tree.root->left, 3, LEFT);
+     14: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 18:13:13, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 18:13:19
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x2E8 (Main), errno: 22 (Invalid argument). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D18C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00457D6C in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (55):
+
+     53: int add_node (TREE *tree, NODE *node, const int value, const bool side)
+     54: {
+=>   55:     my_assert (node != NULL);
+     56:     assert_tree (tree);
+     57: 
+
+# 4 0x0042BE35 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (12):
+
+     10:     add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+=>   12:     add_node (&tree, tree.root->right, 8, RIGHT);
+     13:     add_node (&tree, tree.root->left, 3, LEFT);
+     14: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 18:13:13, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 18:15:42
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x431C (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D18C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459E65 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458ABB in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x0045896C in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x00457EF4 in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (70):
+
+     68:     tree->size++;
+     69: 
+=>   70:     assert_tree (tree);
+     71: 
+     72:     return ERR_NO;
+
+# 7 0x0042BDC4 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (9):
+
+      7:     create_tree (&tree, 10);
+      8: 
+=>    9:     add_node (&tree, tree.root, 5, LEFT);
+     10:     add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 18:22:20, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 18:22:25
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x3CD8 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D054 in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459D2D in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458983 in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x00458834 in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x00457DBC in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (70):
+
+     68:     tree->size++;
+     69: 
+=>   70:     assert_tree (tree);
+     71: 
+     72:     return ERR_NO;
+
+# 7 0x0042BDD4 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (9):
+
+      7:     create_tree (&tree, 10);
+      8: 
+=>    9:     add_node (&tree, tree.root, 5, LEFT);
+     10:     /*add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 18:22:20, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 18:22:52
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x21E0 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D054 in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459D2D in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458983 in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x00458834 in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x00457DBC in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (70):
+
+     68:     tree->size++;
+     69: 
+=>   70:     assert_tree (tree);
+     71: 
+     72:     return ERR_NO;
+
+# 7 0x0042BDD4 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (9):
+
+      7:     create_tree (&tree, 10);
+      8: 
+=>    9:     add_node (&tree, tree.root, 5, LEFT);
+     10:     /*add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 18:22:20, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 22:47:20
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x14C0 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D054 in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459D55 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x004589A8 in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (378):
+
+    376:     }
+    377: 
+=>  378:     size_t size_dot = get_file_size (fp_dot);
+    379: 
+    380:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x00458859 in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (340):
+
+    338:     system (command);
+    339: 
+=>  340:     tree_dump_html (tree);
+    341: }
+    342: 
+
+# 6 0x00457DBC in D:\1 sem mipt\tree\tree.exe: add_node() at D:/1 sem mipt/tree/tree.cpp (70):
+
+     68:     tree->size++;
+     69: 
+=>   70:     assert_tree (tree);
+     71: 
+     72:     return ERR_NO;
+
+# 7 0x0042BDD4 in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (9):
+
+      7:     create_tree (&tree, 10);
+      8: 
+=>    9:     add_node (&tree, tree.root, 5, LEFT);
+     10:     /*add_node (&tree, tree.root->left, 6, RIGHT);
+     11:     add_node (&tree, tree.root, 7, RIGHT);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 22:51:15, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 22:52:18
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x1F50 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459E75 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458ACB in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x0045897C in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 22:55:18, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 22:55:24
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x2424 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459F21 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458B73 in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (383):
+
+    381:     }
+    382: 
+=>  383:     size_t size_dot = get_file_size (fp_dot);
+    384: 
+    385:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x00458A21 in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (345):
+
+    343:     system (command);
+    344: 
+=>  345:     tree_dump_html (tree);
+    346: }
+    347: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 22:59:08, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 22:59:13
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x4B1C (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459E75 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458ACB in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x0045897C in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 23:50:54, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 23:51:01
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x2124 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459E75 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458AC9 in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x0045897A in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 21 2023 23:56:19, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 21 2023 23:56:26
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x760 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459E61 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458AB6 in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x00458967 in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 22 2023 00:13:53, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 22 2023 00:13:59
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x4808 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459EAD in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458AFE in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (379):
+
+    377:     }
+    378: 
+=>  379:     size_t size_dot = get_file_size (fp_dot);
+    380: 
+    381:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x004589AC in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (341):
+
+    339:     system (command);
+    340: 
+=>  341:     tree_dump_html (tree);
+    342: }
+    343: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 22 2023 00:23:41, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 22 2023 00:23:47
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x2560 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459E75 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458ACB in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x0045897C in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 22 2023 00:24:49, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 22 2023 00:24:54
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\1 sem mipt\tree\tree.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400], Instance: 0x0057869C (32-bit), Flags: Cmdre0, Thread: 0x25D4 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0043D19C in D:\1 sem mipt\tree\tree.exe: _txOnSignal() at c:/users/mpavl/downloads/codeblocks/mingw/include/txlib.h (11006)
+# 1 0x76B371F1 in C:\Windows\System32\msvcrt.dll: raise()
+# 2 0x76B3B69B in C:\Windows\System32\msvcrt.dll: abort()
+
+# 3 0x00459E75 in D:\1 sem mipt\tree\tree.exe: get_file_size() at D:/1 sem mipt/tree/include/utils.cpp (38):
+
+     36: size_t get_file_size (FILE *stream)
+     37: {
+=>   38:     my_assert (stream != NULL);
+     39: 
+     40:     size_t start = ftell (stream);
+
+# 4 0x00458ACB in D:\1 sem mipt\tree\tree.exe: tree_dump_html() at D:/1 sem mipt/tree/tree.cpp (377):
+
+    375:     }
+    376: 
+=>  377:     size_t size_dot = get_file_size (fp_dot);
+    378: 
+    379:     char *data_dot = (char *) calloc (size_dot, sizeof (char));
+
+# 5 0x0045897C in D:\1 sem mipt\tree\tree.exe: tree_dump_graph_viz() at D:/1 sem mipt/tree/tree.cpp (339):
+
+    337:     system (command);
+    338: 
+=>  339:     tree_dump_html (tree);
+    340: }
+    341: 
+
+# 6 0x0042BF1E in D:\1 sem mipt\tree\tree.exe: main() at D:/1 sem mipt/tree/main.cpp (21):
+
+     19:     print_tree (&tree, tree.root, fp);
+     20: 
+=>   21:     CALL_DUMP (&tree, 0);
+     22: 
+     23:     destroy_tree (&tree);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 172, Date: 2023-08-12 11:12:24 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\users\mpavl\downloads\codeblocks\mingw\include\txlib.h
+Compiled:	Nov 22 2023 00:25:18, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Nov 22 2023 00:25:23
+
+Run file:	D:\1 sem mipt\tree\tree.exe
+Directory:	D:\1 sem mipt\tree
+
+--------------------------------------------------

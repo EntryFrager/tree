@@ -1,12 +1,20 @@
 digraph List {
-	rankdir = LR;
-	node [shape = record];
+	rankdir = HR;
 	bgcolor = "#696969";
-	0 -> 0 -> 1 -> 2[arrowsize = 0.0, weight = "10000", color = "#696969", fontname = "Times-New-Roman"];
-	0 [shape = Mrecord, style = filled, fillcolor = "#ccff99", label = "idx: 0144D0C8 | value: 10 | left: 0144D050 | right: 00000000 | parent: 00000000"];
-	1 [shape = Mrecord, style = filled, fillcolor = "#ccff99", label = "idx: 0144D050 | value: 5 | left: 00000000 | right: 0144D140 | parent: 0144D0C8"];
-	2 [shape = Mrecord, style = filled, fillcolor = "#ccff99", label = "idx: 0144D140 | value: 6 | left: 00000000 | right: 00000000 | parent: 0144D050"];
-	0 -> 1
-	1 -> 2
-	label = "tree_dump from function main, Tree/main.cpp:17";
-	All[shape = Mrecord, style = filled, fillcolor = "#8B00FF", label = "size = 3"];}
+	node0 [shape = Mrecord, style = filled, fillcolor = "#ff0000", label = "{idx: 0124D140 | value: 10 | left: 0124D0F8 | right: 0124CFC0 | parent: 00000000}"];
+	node1 [shape = Mrecord, style = filled, fillcolor = "#00BFFF", label = "{idx: 0124D0F8 | value: 5 | left: 0124CFF0 | right: 0124D158 | parent: 0124D140}"];
+	node0 -> node1 [color = "#00BFFF"]
+	node2 [shape = Mrecord, style = filled, fillcolor = "#00BFFF", label = "{idx: 0124CFF0 | value: 3 | left: 00000000 | right: 00000000 | parent: 0124D0F8}"];
+	node1 -> node2 [color = "#00BFFF"]
+	node3 [shape = Mrecord, style = filled, fillcolor = "#ccff99", label = "{idx: 0124D158 | value: 6 | left: 00000000 | right: 00000000 | parent: 0124D0F8}"];
+	node1 -> node3 [color = "#ccff99"]
+	node4 [shape = Mrecord, style = filled, fillcolor = "#ccff99", label = "{idx: 0124CFC0 | value: 7 | left: 0124D020 | right: 0124D080 | parent: 0124D140}"];
+	node0 -> node4 [color = "#ccff99"]
+	node5 [shape = Mrecord, style = filled, fillcolor = "#00BFFF", label = "{idx: 0124D020 | value: 11 | left: 00000000 | right: 00000000 | parent: 0124CFC0}"];
+	node4 -> node5 [color = "#00BFFF"]
+	node6 [shape = Mrecord, style = filled, fillcolor = "#ccff99", label = "{idx: 0124D080 | value: 8 | left: 00000000 | right: 00000000 | parent: 0124CFC0}"];
+	node4 -> node6 [color = "#ccff99"]
+	label = "tree_dump from function main, Tree/main.cpp:21";
+
+	All[shape = Mrecord, style = filled, fillcolor = "#8B00FF", label = "size = 7"];}
+

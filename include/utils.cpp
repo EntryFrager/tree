@@ -1,31 +1,31 @@
 #include "utils.h"
 
-int input_text (GENERAL_INFO *gen_inf)
+int input_text (TREE *tree)
 {
-    my_assert (gen_inf != NULL);
+    my_assert (tree != NULL);
 
-    gen_inf->fp_input = fopen (gen_inf->fp_name_input, "r + b");
+    tree->info.fp_base = fopen (tree->info.fp_name_base, "r + b");
 
-    if (gen_inf->fp_input == NULL)
+    if (tree->info.fp_base == NULL)
     {
         return ERR_FOPEN;
     }
 
-    gen_inf->size_file = get_file_size (gen_inf->fp_input);
+    size_t size_file = get_file_size (tree->info.fp_base);
 
-    gen_inf->buf = (char *) calloc (gen_inf->size_file + 1, sizeof (char));
-    my_assert (gen_inf->buf != NULL);
+    tree->info.buf = (char *) calloc (size_file + 1, sizeof (char));
+    my_assert (tree->info.buf != NULL);
 
-    size_t read_size = fread (gen_inf->buf, sizeof (char), gen_inf->size_file, gen_inf->fp_input);
+    size_t read_size = fread (tree->info.buf, sizeof (char), size_file, tree->info.fp_base);
 
-    if (read_size != gen_inf->size_file)
+    if (read_size != size_file)
     {
         return ERR_FREAD;
     }
 
-    *(gen_inf->buf + gen_inf->size_file) = '\0';
+    *(tree->info.buf + size_file) = '\0';
 
-    if (fclose (gen_inf->fp_input) != 0)
+    if (fclose (tree->info.fp_base) != 0)
     {
         return ERR_FCLOSE;
     }
