@@ -13,7 +13,6 @@ int create_tree (TREE *tree, const int value)
     my_assert (tree != NULL);
 
     tree->root = create_node (value, NULL, NULL, NULL);
-    tree->size = 1;
 
     tree->init_status = true;
 
@@ -51,6 +50,81 @@ NODE *create_node (const int value, NODE *left, NODE *right, NODE *parent)
     return node;
 }
 
+int input_text (TREE *tree)
+{
+    my_assert (tree != NULL);
+
+    tree->info.fp_base = fopen (tree->info.fp_name_base, "r + b");
+
+    if (tree->info.fp_base == NULL)
+    {
+        return ERR_FOPEN;
+    }
+
+    tree->info.size_file = get_file_size (tree->info.fp_base);
+
+    tree->info.buf = (char *) calloc (tree->info.size_file + 1, sizeof (char));
+    my_assert (tree->info.buf != NULL);
+
+    size_t read_size = fread (tree->info.buf, sizeof (char), tree->info.size_file, tree->info.fp_base);
+
+    if (read_size != tree->info.size_file)
+    {
+        return ERR_FREAD;
+    }
+
+    *(tree->info.buf + tree->info.size_file) = '\0';
+
+    if (fclose (tree->info.fp_base) != 0)
+    {
+        return ERR_FCLOSE;
+    }
+
+    tree->root = split_node (tree, NULL);
+
+    assert_tree (tree);
+
+    return ERR_NO;
+}
+
+NODE *split_node (TREE *tree, NODE *node)
+{
+    while (isspace (*tree->info.buf) != 0)
+    {
+        tree->info.buf++;
+    }
+
+    if (*tree->info.buf == ')')
+    {
+        tree->info.buf++;
+        return node;
+    }
+    else if (strncmp (tree->info.buf, "nil", 3) == 0)
+    {
+        tree->info.buf += 3;
+        return node;
+    }
+
+    int value = 0;
+    int n_read = 0;
+
+    sscanf (tree->info.buf, "(%d%n", &value, &n_read);
+    tree->info.buf += n_read;
+
+    node = create_node (value, NULL, NULL, node);
+
+    node->left = split_node (tree, node->left);
+
+    while (*tree->info.buf == ')' || isspace (*tree->info.buf) != 0)
+    {
+        tree->info.buf++;
+    }
+
+    node->right = split_node (tree, node->right);
+
+    return node;
+}
+
 int add_node (TREE *tree, NODE *node, const int value, const bool side)
 {
     my_assert (node != NULL);
@@ -66,8 +140,6 @@ int add_node (TREE *tree, NODE *node, const int value, const bool side)
     {
         node->right = new_node;
     }
-
-    tree->size++;
 
     assert_tree (tree);
 
@@ -101,7 +173,6 @@ int delete_node (TREE *tree, NODE *node)
 
     free (node);
     node = NULL;
-    tree->size--;
 
     assert_tree (tree);
     
@@ -139,7 +210,6 @@ int destroy_tree (TREE *tree)
     tree->root = NULL;
 
     tree->init_status = false;
-    tree->size = VALUE_VENOM;
 
     tree->info.fp_name_base = NULL;
 
@@ -175,8 +245,6 @@ int tree_verificator (TREE *tree)
     VERIF_EXPR (tree != NULL, TREE_ERR_PTR)
 
     VERIF_EXPR (tree->init_status == true, TREE_INIT)
-
-    VERIF_EXPR (tree->size >= 0, TREE_ERR_SIZE)
 
     VERIF_EXPR (tree->root != NULL, TREE_ERR_ROOT_PTR)
 
@@ -233,7 +301,6 @@ void tree_dump_text (TREE *tree, const int code_error,
         {
             DUMP_LOG_PARAM ("tree[%p] \"tree\" called from %s(%d) %s", tree, file_err, line_err, func_err);
             DUMP_LOG ("{");
-            DUMP_LOG_PARAM ("\tsize = %d", tree->size);
             DUMP_LOG_PARAM ("\tinit_status = %d", tree->init_status);
             DUMP_LOG ("\t{");
 
@@ -279,9 +346,8 @@ void print_tree_dump (NODE *node, FILE *stream)
 #define DUMP_DOT(str) fprintf (fp_dot, str "\n");
 #define DUMP_DOT_PARAM(str, ...) fprintf (fp_dot, str "\n", __VA_ARGS__);
 
-void tree_dump_graph_viz (TREE *tree, const int code_error, 
-                         const char *file_err, const char *func_err, 
-                         const int line_err)
+void tree_dump_graph_viz (TREE *tree, const char *file_err, 
+                          const char *func_err, const int line_err)
 {
     FILE *fp_dot = fopen (tree->info.fp_dot_name, "w+");
 
@@ -302,8 +368,7 @@ void tree_dump_graph_viz (TREE *tree, const int code_error,
                 create_node (tree->root, fp_dot, -1, 0, RED_COLOR);
             }
 
-            DUMP_DOT_PARAM ("\tlabel = \"tree_dump from function %s, Tree/%s:%d\";\n", func_err, file_err, line_err);
-            DUMP_DOT_PARAM ("\tAll[shape = Mrecord, style = filled, fillcolor = " PURPLE_COLOR ", label = \"size = %d\"];}\n", tree->size);
+            DUMP_DOT_PARAM ("\tlabel = \"tree_dump from function %s, Tree/%s:%d\";}\n", func_err, file_err, line_err);
         }
     }
 
@@ -360,7 +425,7 @@ void tree_dump_html (TREE *tree)
 
     fread (data_dot, sizeof (char), size_dot, fp_dot);
 
-    fprintf (tree->info.fp_html_dot, "%s\n", data_dot);
+    fprintf (tree->info.fp_html_dot, "%s", data_dot);
 
     if (fclose (fp_dot) != 0)
     {
