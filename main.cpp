@@ -6,17 +6,16 @@ int main ()
 
     create_tree (&tree, 10);
 
-    add_node (&tree, tree.root, 5, LEFT);
-    add_node (&tree, tree.root->left, 6, RIGHT);
-    add_node (&tree, tree.root, 7, RIGHT);
-    add_node (&tree, tree.root->right, 8, RIGHT);
-    add_node (&tree, tree.root->left, 3, LEFT);
+    input_text (&tree);
 
-    add_node (&tree, tree.root->right, 11, LEFT);
-
-    FILE *fp = fopen ("tree.txt", "w");
+    FILE *fp = fopen (tree.info.fp_name_base, "w");
 
     print_tree (&tree, tree.root, fp);
+
+    if (fclose (fp) != 0)
+    {
+        my_strerr (ERR_FCLOSE, stderr);
+    }
 
     CALL_DUMP (&tree, 0);
 

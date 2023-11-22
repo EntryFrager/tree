@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "TXLib.h"
+#include <ctype.h>
+#include <string.h>
 
-#include "include\error.h"
-#include "include\utils.h"
+#include "include/error.h"
+#include "include/utils.h"
 
 #define DEBUG
 
@@ -14,7 +15,7 @@
     #define CALL_DUMP(tree, code_error)                                         \
     {                                                                           \
         tree_dump_text (tree, code_error, __FILE__, __func__, __LINE__);        \
-        tree_dump_graph_viz (tree, code_error, __FILE__, __func__, __LINE__);   \
+        tree_dump_graph_viz (tree, __FILE__, __func__, __LINE__);               \
     }
 
     static int CODE_ERROR = 0;
@@ -28,7 +29,7 @@
         }                                                                                       \
     }
 
-    #define CHECK_ERROR_PRINT(code_error)  if (code_error != ERR_NO) fprintf (stderr, "\x1b[31m%s\x1b[0m", my_strerr (code_error));
+    #define CHECK_ERROR_PRINT(code_error)  if (code_error != ERR_NO) fprintf (stderr, "\x1b[31m%s\x1b[0m", my_strerr (code_error, stderr));
     #define CHECK_ERROR_RETURN(code_error) if (code_error != ERR_NO) return code_error;
 #else
     #define CALL_DUMP(...)
@@ -53,6 +54,8 @@ typedef struct {
     char *fp_name_base = NULL;
     FILE *fp_base      = NULL;
 
+    size_t size_file = 0;
+
     char *buf = NULL;
 
 #ifdef DEBUG
@@ -68,7 +71,6 @@ typedef struct {
 typedef struct {
     NODE *root = NULL;
 
-    int size = VALUE_VENOM;
     bool init_status = false;
 
     INFO info = {};
@@ -77,6 +79,10 @@ typedef struct {
 int create_tree (TREE *tree, const int value);
 
 NODE *create_node (const int value, NODE *left, NODE *right, NODE *parent);
+
+int input_text (TREE *tree);
+
+NODE *split_node (TREE *tree, NODE *node);
 
 int add_node (TREE *tree, NODE *node, const int value, const bool side);
 
@@ -95,9 +101,8 @@ int destroy_tree (TREE *tree);
                          const char *file_err, const char *func_err, 
                          const int line_err);
 
-    void tree_dump_graph_viz (TREE *tree, const int code_error, 
-                             const char *file_err, const char *func_err, 
-                             const int line_err);
+    void tree_dump_graph_viz (TREE *tree, const char *file_err, 
+                              const char *func_err, const int line_err);
 
     void tree_dump_html (TREE *tree);
 #endif
